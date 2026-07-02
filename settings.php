@@ -7,25 +7,26 @@ define('TINYIB_BOARDDESC', 'Моя Анонимная Борда');
 define('TINYIB_TIMEZONE', 'Europe/Moscow');
 
 // Настройки подключения к Базе Данных Supabase (PostgreSQL)
+// Настройки подключения к Базе Данных Supabase (PostgreSQL)
 define('TINYIB_DBMODE', 'pdo');
 define('TINYIB_DBDRIVER', 'pgsql');
-define('TINYIB_DBHOST', 'aws-0-eu-central-1.pooler.supabase.com'); // Замени на свой хост из Supabase
+define('TINYIB_DBHOST', 'aws-0-eu-central-1.pooler.supabase.com'); // Твой хост
 define('TINYIB_DBPORT', 6543);
 define('TINYIB_DBNAME', 'postgres');
-define('TINYIB_DBUSER', 'postgres.xxxx'); // Замени на свой логин
-define('TINYIB_DBPASSWORD', 'Твой_Пароль_От_БД'); // Замени на свой пароль
+define('TINYIB_DBUSER', 'postgres.kushnermaks12@db.tszlvntdykvzrzavckea.supabase.co'); 
+define('TINYIB_DBPASSWORD', 'kushnermaks12'); 
 
 // Настройки сохранения (0 = хранить посты НАВСЕГДА, без удаления старых)
 define('TINYIB_MAXPOSTS', 0);
 define('TINYIB_TRUNCATE', 0);
 
 // Настройки Supabase Storage для картинок
-define('SUPABASE_PROJECT_ID', 'xxxx'); // ID твоего проекта Supabase (из URL-адреса)
-define('SUPABASE_ANON_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'); // Твой публичный (anon) ключ API
-define('SUPABASE_BUCKET', 'images'); // Имя публичного бакета, который ты создал
+define('SUPABASE_PROJECT_ID', '[ID_ТВОЕГО_ПРОЕКТА]'); // Только буквы/цифры из начала ссылки
+define('SUPABASE_ANON_KEY', '[ДЛИННЫЙ_КЛЮЧ_ANON_PUBLIC]'); 
+define('SUPABASE_BUCKET', 'images'); 
 
-// Ключ администратора для управления досками и удаления спама
-define('TINYIB_MANAGEKEY', 'AdminPassword123');
+// Пароль от админки (чтобы модерировать сайт)
+define('TINYIB_MANAGEKEY', 'AdminPassword123'); // Смени на свой!
 
 // Защита от спам-ботов (hCaptcha - тоже полностью бесплатная)
 define('TINYIB_CAPTCHA', ''); // Поставь 'hcaptcha' когда зарегистрируешь ключи на hcaptcha.com
