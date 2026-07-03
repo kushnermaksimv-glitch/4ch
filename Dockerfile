@@ -7,10 +7,13 @@ RUN apt-get update && apt-get install -y libpq-dev curl git unzip \
 # Включаем модуль перенаправления Apache
 RUN a2enmod rewrite
 
+# Заставляем Apache искать index.php в первую очередь
+RUN echo "DirectoryIndex index.php index.html" > /etc/apache2/mods-enabled/dir.conf
+
 # Очищаем стандартную папку сервера
 RUN rm -rf /var/www/html/*
 
-# Клонируем официальный движок TinyIB напрямую из репозитория, который у тебя на скришоте
+# Клонируем официальный движок TinyIB напрямую из репозитория
 RUN git clone https://github.com/tslocum/tinyib.git /var/www/html/
 
 # Копируем ТВОИ файлы настроек и исправлений поверх движка
