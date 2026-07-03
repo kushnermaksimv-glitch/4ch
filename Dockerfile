@@ -13,10 +13,9 @@ RUN rm -rf /var/www/html/*
 # Клонируем официальный движок TinyIB напрямую из репозитория
 RUN git clone https://github.com/tslocum/tinyib.git /var/www/html/
 
-# Копируем ТВОИ файлы настроек, заглушку и редирект поверх движка
+# Копируем ТВОИ файлы настроек и заглушку поверх движка
 COPY settings.php /var/www/html/settings.php
 COPY index.php /var/www/html/index.php
-COPY index.html /var/www/html/index.html
 COPY supabase_uploader.php /var/www/html/supabase_uploader.php
 
 # Выставляем правильные права для сервера
