@@ -2,15 +2,85 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Загрузка борды...</title>
-    <script>
-        // JS мгновенно перенаправляет браузер на страницу управления
-        window.location.replace("/manage.php");
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моя Анонимная Борда</title>
+    <style>
+        body { background: #eef2ffd9; color: #800000; font-family: arial, sans-serif; padding: 20px; }
+        .header { text-align: center; color: #af0a0a; }
+        .form-post { background: #d6daf0; border: 1px solid #b7c5d9; padding: 15px; max-width: 500px; margin: 0 auto 30px; border-radius: 4px; }
+        .form-group { margin-bottom: 10px; }
+        .form-group label { display: inline-block; width: 80px; font-weight: bold; }
+        .form-group input[type="text"], .form-group textarea { width: 380px; padding: 5px; border: 1px solid #a9a9a9; }
+        .btn { background: #224488; color: white; padding: 5px 15px; border: none; cursor: pointer; border-radius: 3px; font-weight: bold; }
+        .thread { background: #d6daf0; border: 1px solid #b7c5d9; padding: 15px; margin-bottom: 15px; border-radius: 4px; }
+        .post-info { color: #117743; font-size: 0.9em; margin-bottom: 10px; }
+        .post-text { color: #000; font-size: 1em; white-space: pre-wrap; }
+        .post-img { max-width: 200px; max-height: 200px; display: block; margin-top: 10px; border: 1px solid #a9a9a9; }
+    </style>
 </head>
 <body>
-    <p style="text-align: center; font-family: sans-serif; margin-top: 50px;">
-        Перенаправление в панель управления... Если ничего не произошло, <a href="/manage.php">нажмите сюда</a>.
-    </p>
+
+    <div class="header">
+        <h1>/b/ - Случайное</h1>
+        <hr>
+    </div>
+
+    <div class="form-post">
+        <form action="post.php" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Имя:</label>
+                <input type="text" name="name" value="Аноним">
+            </div>
+            <div class="form-group">
+                <label>Текст:</label>
+                <textarea name="message" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Файл:</label>
+                <input type="file" name="image" accept="image/*">
+            </div>
+            <div style="text-align: center;">
+                <button type="submit" class="btn">Отправить пост</button>
+            </div>
+        </form>
+    </div>
+
+    <hr>
+
+    <div id="board-posts">
+        <p style="text-align:center;">Загрузка постов...</p>
+    </div>
+
+    <script>
+        // Запрашиваем список постов у нашего сервера
+        fetch('api.php')
+            .then(res => res.json())
+            .then(posts => {
+                const container = document.getElementById('board-posts');
+                container.innerHTML = '';
+                
+                if (posts.length === 0) {
+                    container.innerHTML = '<p style="text-align:center;">Постов пока нет. Будь первым!</p>';
+                    return;
+                }
+
+                posts.forEach(post => {
+                    let imgHtml = post.image_url ? `<a href="${post.image_url}" target="_blank"><img class="post-img" src="${post.image_url}"></a>` : '';
+                    
+                    container.innerHTML += `
+                        <div class="thread">
+                            <div class="post-info">
+                                <b>${post.name || 'Аноним'}</b> ${post.created_at} №${post.id}
+                            </div>
+                            <div class="post-text">${post.message}</div>
+                            ${imgHtml}
+                        </div>
+                    `;
+                });
+            })
+            .catch(err => {
+                document.getElementById('board-posts').innerHTML = '<p style="text-align:center; color:red;">Ошибка загрузки постов.</p>';
+            });
+    </script>
 </body>
 </html>
