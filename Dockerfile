@@ -13,16 +13,12 @@ RUN rm -rf /var/www/html/*
 # Клонируем официальный движок TinyIB напрямую в корень сервера
 RUN git clone https://github.com/tslocum/tinyib.git /var/www/html/
 
-# На всякий случай удаляем index.html движка, если он там есть
-RUN rm -f /var/www/html/index.html
-
-# Копируем ТВОИ файлы настроек и заглушку прямо поверх движка
+# Копируем ТВОИ файлы настроек, JS-редирект и загрузчик картинок
 COPY settings.php /var/www/html/settings.php
-COPY index.php /var/www/html/index.php
+COPY index.html /var/www/html/index.html
 COPY supabase_uploader.php /var/www/html/supabase_uploader.php
 
-# НАСТРОЙКА ПРАВ (Решает проблему 403 Forbidden навсегда)
-# Даем серверу Apache полные права на чтение, запись и запуск всех файлов
+# Даем серверу полные права на чтение и запись
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 777 /var/www/html
 
