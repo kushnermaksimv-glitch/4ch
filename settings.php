@@ -13,7 +13,8 @@ define('TINYIB_DBHOST', 'aws-0-eu-central-1.pooler.supabase.com'); // Прове
 define('TINYIB_DBPORT', 6543); // Поставь именно 6543 вместо 5432
 define('TINYIB_DBNAME', 'postgres');
 define('TINYIB_DBUSER', 'postgres.tszlvntdykvzrzavckea'); 
-define('TINYIB_DBPASSWORD', 'kushnermaks12'); 
+define('TINYIB_DBPASSWORD', 'kushnermaks12');
+define('TINYIB_DBOPTIONS', array(PDO::ATTR_PERSISTENT => true, PDO::ATTR_TIMEOUT => 5));
 
 // Настройки сохранения (0 = хранить посты НАВСЕГДА, без удаления старых)
 define('TINYIB_MAXPOSTS', 0);
