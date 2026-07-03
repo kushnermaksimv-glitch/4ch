@@ -21,7 +21,7 @@ define('TINYIB_TRUNCATE', 0);
 
 // Настройки Supabase Storage для картинок
 define('SUPABASE_PROJECT_ID', 'tszlvntdykvzrzavckea'); 
-define('SUPABASE_ANON_KEY', 'ВСТАВЬ_СЮДА_СВОЙ_ДЛИННЫЙ_КЛЮЧ_ANON_PUBLIC'); 
+define('SUPABASE_ANON_KEY', sb_publishable_2BzG1TT8unHbeiMs4wpTAQ_B02CSjsr); 
 define('SUPABASE_BUCKET', 'images'); 
 
 // Ключ администратора для управления досками и удаления спама
