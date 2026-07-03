@@ -5,7 +5,7 @@ function uploadToSupabase($local_file_path, $filename) {
     $anon_key = SUPABASE_ANON_KEY;
     $bucket = SUPABASE_BUCKET;
     
-    if ($supabase_id == 'xxxx') return false; // Настройки по умолчанию не изменены
+    if ($supabase_id == 'db' && $anon_key == 'СЮДА_ВСТАВЬ_СВОЙ_ДЛИННЫЙ_ANON_KEY') return false; 
 
     $url = "https://" . $supabase_id . ".supabase.co/storage/v1/object/" . $bucket . "/" . $filename;
     
