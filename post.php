@@ -1,5 +1,14 @@
 <?php
-require_once 'config.php';
+// Жёстко прописанные настройки Supabase
+define('DB_HOST', 'aws-0-eu-central-1.pooler.supabase.com');
+define('DB_PORT', 6543);
+define('DB_NAME', 'postgres');
+define('DB_USER', 'postgres.tszlvntdykvzrzavckea');
+define('DB_PASSWORD', 'kushnermaks12');
+
+define('SUPABASE_PROJECT_ID', 'tszlvntdykvzrzavckea');
+define('SUPABASE_ANON_KEY', 'EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRzemx2bnRkeWt2enJ6YXZja2VhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5NjI4NzgsImV4cCI6MjA5ODUzODg3OH0.smGi6sXveyvoLvBK6UhuudV9eik42hWkMT90Cu9N5kA');
+define('SUPABASE_BUCKET', 'my-4ch');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = !empty($_POST['name']) ? htmlspecialchars($_POST['name']) : 'Аноним';
@@ -10,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Сообщение не может быть пустым!");
     }
 
-    // Обработка загрузки картинки в Supabase Storage
+    // Загрузка картинки
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $file_tmp = $_FILES['image']['tmp_name'];
         $file_name = time() . '_' . basename($_FILES['image']['name']);
@@ -35,17 +44,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         curl_close($ch);
 
         if ($http_code == 200 || $http_code == 201) {
-            // Ссылка на публичный просмотр картинки
             $image_url = "https://" . SUPABASE_PROJECT_ID . ".supabase.co/storage/v1/object/public/" . SUPABASE_BUCKET . "/" . $file_name;
         }
     }
 
-    // Сохранение поста в PostgreSQL Supabase
+    // Сохранение в базу
     try {
         $dsn = "pgsql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME;
         $pdo = new PDO($dsn, DB_USER, DB_PASSWORD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
-        // Создаем таблицу постов, если её еще нет в Supabase
         $pdo->exec("CREATE TABLE IF NOT EXISTS custom_posts (
             id SERIAL PRIMARY KEY,
             name VARCHAR(100),
@@ -61,7 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Ошибка Базы Данных: " . $e->getMessage());
     }
 
-    // Возвращаемся обратно на главную
     header('Location: index.html');
     exit;
 }
