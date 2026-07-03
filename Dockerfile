@@ -1,16 +1,25 @@
 FROM php:8.2-apache
 
-# Установка модулей для работы с PostgreSQL
-RUN apt-get update && apt-get install -y libpq-dev curl \
+# Устанавливаем системные утилиты и модули для PostgreSQL
+RUN apt-get update && apt-get install -y libpq-dev curl git unzip \
     && docker-php-ext-install pdo pdo_pgsql pgsql
 
-# Включаем модуль rewrite для красивых ссылок Apache
+# Включаем модуль перенаправления Apache
 RUN a2enmod rewrite
 
-# Копируем код в рабочую директорию сервера
-COPY . /var/www/html/
+# Очищаем стандартную папку сервера
+RUN rm -rf /var/www/html/*
 
-# Даем права на запись
-RUN chown -R www-data:www-data /var/www/html/
+# Клонируем официальный движок TinyIB напрямую из репозитория, который у тебя на скришоте
+RUN git clone https://github.com/tslocum/tinyib.git /var/www/html/
+
+# Копируем ТВОИ файлы настроек и исправлений поверх движка
+COPY settings.php /var/www/html/settings.php
+COPY index.php /var/www/html/index.php
+COPY supabase_uploader.php /var/www/html/supabase_uploader.php
+
+# Выставляем правильные права для сервера
+RUN chown -R www-data:www-data /var/www/html/ \
+    && chmod -R 755 /var/www/html/
 
 EXPOSE 80
