@@ -9,8 +9,8 @@ define('TINYIB_TIMEZONE', 'Europe/Moscow');
 // Настройки подключения к Базе Данных Supabase (PostgreSQL)
 define('TINYIB_DBMODE', 'pdo');
 define('TINYIB_DBDRIVER', 'pgsql');
-define('TINYIB_DBHOST', 'db.tszlvntdykvzrzavckea.supabase.co'); 
-define('TINYIB_DBPORT', 6543);
+define('TINYIB_DBHOST', 'aws-0-eu-central-1.pooler.supabase.com'); // Проверь, чтобы в адресе было слово pooler
+define('TINYIB_DBPORT', 6543); // Поставь именно 6543 вместо 5432
 define('TINYIB_DBNAME', 'postgres');
 define('TINYIB_DBUSER', 'postgres.tszlvntdykvzrzavckea'); 
 define('TINYIB_DBPASSWORD', 'kushnermaks12'); 
